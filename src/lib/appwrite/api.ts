@@ -1,5 +1,5 @@
 // cspell:ignore appwrite
-import { ID, Query } from "appwrite";
+import { ID, Query, OAuthProvider } from "appwrite";
 import { account, appwriteConfig, avatars, databases } from "./config";
 import type { INewUser } from "@/types";
 
@@ -90,15 +90,21 @@ export async function getCurrentAccount() {
     const currentAccount = await getAccount();
     if (!currentAccount) throw Error;
 
-    console.log("currentAccount", currentAccount);
-
     const currentUser = await databases.listDocuments(
       appwriteConfig.databaseId,
       appwriteConfig.userCollectionId,
       [Query.equal("accountId", currentAccount.$id)],
     );
 
-    if (!currentUser) throw Error;
+    if (currentUser.documents.length === 0) {
+      return await saveUserToDB({
+        accountId: currentAccount.$id,
+        name: currentAccount.name,
+        email: currentAccount.email,
+        username: currentAccount.email,
+        imageUrl: avatars.getInitials(currentAccount.name),
+      });
+    }
 
     console.log("currentUser", currentUser);
 
@@ -106,5 +112,29 @@ export async function getCurrentAccount() {
   } catch (error) {
     console.log(error);
     return null;
+  }
+}
+
+export async function signinWithGoogle() {
+  try {
+    account.createOAuth2Session({
+      provider: OAuthProvider.Google,
+      success: "http://localhost:5173",
+      failure: "http://localhost:5173/sign-up",
+    });
+  } catch (error) {
+    console.log(error);
+  }
+}
+
+export async function signinWithGithub() {
+  try {
+    account.createOAuth2Session({
+      provider: OAuthProvider.Github,
+      success: "http://localhost:5173",
+      failure: "http://localhost:5173/sign-up",
+    });
+  } catch (error) {
+    console.log(error);
   }
 }

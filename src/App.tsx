@@ -7,6 +7,7 @@ import { Home } from "./_root/pages";
 
 import "@/globals.css";
 import { Toaster } from "./components/ui/toast";
+import ForgotPasswordForm from "./_auth/forms/ForgotPasswordForm";
 
 function App() {
   return (
@@ -16,6 +17,7 @@ function App() {
         <Route element={<AuthLayout />}>
           <Route path="/sign-in" element={<SigninForm />} />
           <Route path="/sign-up" element={<SignupForm />} />
+          <Route path="/forgot-password" element={<ForgotPasswordForm />} />
         </Route>
 
         {/* private routes  */}

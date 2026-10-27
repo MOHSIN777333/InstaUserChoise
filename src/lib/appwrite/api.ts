@@ -138,3 +138,12 @@ export async function signinWithGithub() {
     console.log(error);
   }
 }
+
+export async function signOutAccount() {
+  try {
+    const logOutAccount = await account.deleteSession("current");
+    return logOutAccount;
+  } catch (error) {
+    console.log(error);
+  }
+}

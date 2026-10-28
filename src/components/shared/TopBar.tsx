@@ -13,7 +13,7 @@ const TopBar = () => {
   }, [isSuccess]);
 
   return (
-    <section className=" bg-[#1C2944] sticky top-0 z-50 md:hidden  w-full">
+    <section className=" bg-[#080D1B] sticky top-0 z-50 md:hidden  w-full">
       <div className="flex justify-between items-center  py-4 px-5">
         <Link
           to={"/"}
@@ -29,7 +29,7 @@ const TopBar = () => {
         <div className="flex gap-4">
           <Button
             onClick={() => signOut()}
-            variant="ghost"
+            variant="destructive"
             className="flex gap-4 items-center justify-start hover:bg-transparent hover:text-white cursor-pointer"
           >
             <img
@@ -52,9 +52,3 @@ const TopBar = () => {
 };
 
 export default TopBar;
-
-// import { Button } from "@/components/ui/button"
-
-// export function ButtonDestructive() {
-//   return <Button variant="destructive">Destructive</Button>
-// }
